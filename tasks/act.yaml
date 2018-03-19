@@ -1,0 +1,24 @@
+---
+
+- name: Execute pre-commands
+  command: '{{ item.pre_command.command }}'
+  args:
+    chdir: '{{ item.pre_command.chdir | default(item.dest) }}'
+  when: '{{ item.pre_command is defined }}'
+
+- name: Checkout git repo
+  git:
+    repo: '{{ item.repo }}'
+    dest: '{{ item.dest }}'
+    force: 'yes'
+    key_file: '{{ item.key_file | default(omit) }}'
+    version: '{{ item.version | default("HEAD") }}'
+  register: git_checkout
+
+- name: Execute post-commands
+  command: '{{ item.post_command.command }}'
+  args:
+    chdir: '{{ item.post_command.chdir | default(item.dest) }}'
+  when: '{{ item.post_command is defined and git_checkout.changed }}'
+
+...

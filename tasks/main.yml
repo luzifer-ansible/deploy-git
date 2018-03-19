@@ -1,26 +1,6 @@
 ---
 
-- name: Execute pre-commands
-  command: '{{ item.pre_command.command }}'
-  args:
-    chdir: '{{ item.pre_command.chdir | default(item.dest) }}'
-  with_items: '{{ git_checkouts }}'
-  when: '{{ item.pre_command is defined }}'
-
-- name: Checkout git repo
-  git:
-    repo: '{{ item.repo }}'
-    dest: '{{ item.dest }}'
-    force: 'yes'
-    key_file: '{{ item.key_file | default(omit) }}'
-    version: '{{ item.version | default("HEAD") }}'
-  with_items: '{{ git_checkouts }}'
-
-- name: Execute post-commands
-  command: '{{ item.post_command.command }}'
-  args:
-    chdir: '{{ item.post_command.chdir | default(item.dest) }}'
-  with_items: '{{ git_checkouts }}'
-  when: '{{ item.post_command is defined }}'
+- include_tasks: act.yaml
+  with_items: {{ git_checkouts }}
 
 ...
