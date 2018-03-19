@@ -4,7 +4,7 @@
   command: '{{ item.pre_command.command }}'
   args:
     chdir: '{{ item.pre_command.chdir | default(item.dest) }}'
-  when: '{{ item.pre_command is defined }}'
+  when: item.pre_command is defined
 
 - name: Checkout git repo
   git:
@@ -19,6 +19,6 @@
   command: '{{ item.post_command.command }}'
   args:
     chdir: '{{ item.post_command.chdir | default(item.dest) }}'
-  when: '{{ item.post_command is defined and git_checkout.changed }}'
+  when: item.post_command is defined and git_checkout.changed
 
 ...
