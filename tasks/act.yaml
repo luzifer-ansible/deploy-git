@@ -1,5 +1,11 @@
 ---
 
+- name: Generate deployment SSH key if not available
+  command: 'ssh-keygen -b 256 -t ed25519 -q -N "" -f "{{ item.key_file }}" -C "Ansible generated deployment key for {{ item.repo }}"'
+  args:
+    creates: '{{ item.key_file }}'
+  when: deploy_git_keygen and item.key_file is defined
+
 - name: Execute pre-commands
   command: '{{ item.pre_command.command }}'
   args:

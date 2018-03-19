@@ -1,5 +1,6 @@
 ---
 
-git_checkouts: []
+deploy_git_checkouts: []
+deploy_git_keygen: false
 
 ...
