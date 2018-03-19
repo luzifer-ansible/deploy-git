@@ -1,6 +1,6 @@
 ---
 
 - include_tasks: act.yaml
-  with_items: '{{ git_checkouts }}'
+  with_items: '{{ deploy_git_checkouts }}'
 
 ...
